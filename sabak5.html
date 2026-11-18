@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Информатика 5-класс · Кайталоо оюндары жана жаңы тема</title>
+<style>
+:root{--red:#B3122E;--red2:#E04462;--gold:#E8A33D;--gold2:#FFE3AE;--teal:#1F8A8A;--teal2:#CDEDEA;--navy:#23304A;--cream:#FFF8EE;--ok:#2E9E5B;--bad:#D6453D;--card:#ffffff}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{font-family:"Segoe UI","Trebuchet MS",Arial,sans-serif;background:var(--cream);color:var(--navy);font-size:clamp(15px,1.55vw,26px);user-select:none}
+.band{position:fixed;left:0;right:0;top:0;height:16px;z-index:5;background:var(--red) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='16'%3E%3Cpath d='M24 13c-3 0-5-2-5-4.5S21 4 23.5 4 27 6 26 7.6M24 13c3 0 5-2 5-4.5S27 4 24.5 4 21 6 22 7.6M0 13h18M30 13h18' fill='none' stroke='%23FFE3AE' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x center}
+.deck{position:fixed;inset:16px 0 64px 0}
+.slide{position:absolute;inset:0;padding:2.2vh 4vw 1vh;display:none;flex-direction:column;overflow:auto}
+.slide.on{display:flex;animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.tag{display:inline-block;font-size:.7em;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.25em .8em;border-radius:99px;background:var(--teal2);color:var(--teal);margin-bottom:.4em;align-self:flex-start}
+.tag.new{background:var(--gold2);color:#8a5a00}
+h1{font-size:2.4em;line-height:1.1;color:var(--red)}
+h2{font-size:1.75em;line-height:1.15;color:var(--red);margin-bottom:.35em}
+h3{font-size:1.1em;margin:.3em 0}
+p.lead{font-size:1.05em;margin-bottom:.6em;max-width:60em}
+.def{background:#fff;border-left:8px solid var(--gold);border-radius:14px;padding:.6em 1em;margin:.3em 0 .7em;box-shadow:0 3px 10px rgba(35,48,74,.08);font-size:1.05em}
+.def b{color:var(--red)}
+.hint{font-size:.85em;background:var(--teal2);color:#0f5656;border-radius:12px;padding:.45em .9em;margin-top:.6em;align-self:flex-start}
+.row{display:flex;gap:1.2em;flex-wrap:wrap}
+.grow{flex:1;min-width:16em}
+.btn{font:inherit;font-weight:700;border:0;border-radius:14px;padding:.55em 1.1em;cursor:pointer;background:var(--navy);color:#fff;box-shadow:0 4px 0 rgba(0,0,0,.2)}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.btn.gold{background:var(--gold);color:var(--navy)}
+.btn.red{background:var(--red)}
+.btn.teal{background:var(--teal)}
+.btn.ghost{background:#fff;color:var(--navy);border:2px solid #d9cfc0;box-shadow:none}
+/* nav */
+.nav{position:fixed;left:0;right:0;bottom:0;height:64px;background:#fff;border-top:3px solid var(--gold2);display:flex;align-items:center;gap:.6em;padding:0 1em;z-index:6;font-size:16px}
+.nav .btn{padding:.45em .9em;font-size:18px}
+.prog{flex:1;height:10px;background:#f0e6d6;border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--gold),var(--red));width:0;transition:width .3s}
+.count{min-width:4.5em;text-align:center;font-weight:700}
+.team{display:flex;align-items:center;gap:.35em;padding:.2em .5em;border-radius:12px;background:#f7f2ea;font-weight:700}
+.team .sc{min-width:1.8em;text-align:center;font-size:22px}
+.team.t1 .sc{color:var(--red)} .team.t2 .sc{color:var(--teal)}
+.team button{width:30px;height:30px;border-radius:50%;border:0;font-weight:900;cursor:pointer;background:#e9dfcf;font-size:18px}
+.team.turn{outline:3px solid var(--gold)}
+/* title */
+.hero{flex:1;display:flex;flex-direction:column;justify-content:center;gap:.6em}
+.hero .sub{font-size:1.2em;color:var(--teal);font-weight:700}
+.path{display:grid;grid-template-columns:repeat(4,1fr);gap:1em;margin-top:.8em}
+.step{background:#fff;border-radius:18px;padding:.9em;box-shadow:0 4px 14px rgba(35,48,74,.08);border-top:8px solid var(--teal)}
+.step:nth-child(2){border-color:var(--gold)}.step:nth-child(3){border-color:var(--red)}.step:nth-child(4){border-color:var(--navy)}
+.step .em{font-size:2em}
+.names{display:flex;gap:1em;flex-wrap:wrap;margin-top:.4em}
+.names input{font:inherit;font-weight:700;padding:.35em .7em;border-radius:12px;border:2px solid #d9cfc0;width:10em;background:#fff}
+/* flip cards */
+.flips{display:grid;grid-template-columns:repeat(auto-fit,minmax(13em,1fr));gap:.9em;margin-top:.3em}
+.flip{perspective:900px;min-height:8.5em;cursor:pointer}
+.flip .in{position:relative;width:100%;height:100%;min-height:8.5em;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;border-radius:18px;padding:.8em;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 4px 14px rgba(35,48,74,.1)}
+.flip .f{background:var(--red);color:#fff;font-weight:700;font-size:1.05em}
+.flip .f .em{font-size:2.2em;margin-bottom:.15em}
+.flip .f small{font-weight:400;opacity:.8;font-size:.7em;margin-top:.4em}
+.flip .b{background:#fff;transform:rotateY(180deg);border:3px solid var(--gold);font-size:.92em}
+.flip .b .em{font-size:2.2em}
+.flip:nth-child(3n+2) .f{background:var(--teal)}.flip:nth-child(3n) .f{background:var(--navy)}
+/* sort */
+.pool{display:flex;flex-wrap:wrap;gap:.5em;justify-content:center;min-height:3em;padding:.5em;border:3px dashed #e3d6c2;border-radius:16px;margin-bottom:.8em}
+.chip{background:#fff;border:3px solid #e3d6c2;border-radius:14px;padding:.35em .7em;font-weight:700;cursor:grab;touch-action:none;display:inline-flex;align-items:center;gap:.3em;box-shadow:0 3px 0 #e3d6c2}
+.chip .em{font-size:1.35em}
+.chip.sel{border-color:var(--gold);background:var(--gold2);transform:scale(1.06)}
+.chip.ok{border-color:var(--ok);box-shadow:none;cursor:default;background:#e8f7ee}
+.chip.drag{position:fixed;z-index:50;pointer-events:none;transform:scale(1.1);box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.bins{display:grid;gap:.8em;flex:1}
+.bin{background:#fff;border-radius:18px;padding:.6em;border:3px solid var(--teal2);min-height:7em;display:flex;flex-direction:column;cursor:pointer}
+.bin h4{font-size:1em;text-align:center;margin-bottom:.4em;color:var(--teal)}
+.bin .in{display:flex;flex-wrap:wrap;gap:.4em;justify-content:center}
+.bin.hov{border-color:var(--gold);background:#fffaf0}
+.bin:nth-child(2){border-color:#f6d3d9}.bin:nth-child(2) h4{color:var(--red)}
+.bin:nth-child(3){border-color:var(--gold2)}.bin:nth-child(3) h4{color:#9a6400}
+.bin:nth-child(4){border-color:#d5dae6}.bin:nth-child(4) h4{color:var(--navy)}
+.shake{animation:sh .4s}
+@keyframes sh{0%,100%{transform:none}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.done{display:none;margin-top:.6em;font-weight:800;color:var(--ok);font-size:1.15em;text-align:center}
+.done.on{display:block;animation:in .4s}
+/* match */
+.match{display:grid;grid-template-columns:1fr 1.6fr;gap:.6em 2em;margin-top:.3em}
+.mcol{display:flex;flex-direction:column;gap:.55em}
+.mi{background:#fff;border:3px solid #e3d6c2;border-radius:14px;padding:.45em .8em;cursor:pointer;font-weight:700;display:flex;align-items:center;gap:.4em}
+.mi .em{font-size:1.4em}
+.mcol.r .mi{font-weight:500}
+.mi.sel{border-color:var(--gold);background:var(--gold2)}
+.mi.ok{cursor:default;color:#fff;border-color:transparent}
+/* order */
+.slots{display:flex;gap:.6em;flex-wrap:wrap;margin:.5em 0}
+.slot{flex:1;min-width:7em;min-height:4.6em;border:3px dashed #d9cfc0;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-direction:column;font-weight:800;text-align:center;padding:.3em;position:relative;background:#fffdf8}
+.slot .n{position:absolute;top:.2em;left:.45em;font-size:.75em;color:#b9a98f}
+.slot.ok{border:3px solid var(--ok);background:#e8f7ee}
+.slot .em{font-size:1.6em}
+.tiles{display:flex;gap:.6em;flex-wrap:wrap;justify-content:center}
+.tile{background:var(--navy);color:#fff;border-radius:16px;padding:.6em 1em;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:center;min-width:6.5em}
+.tile .em{font-size:1.6em}
+.tile:nth-child(2n){background:var(--teal)}.tile:nth-child(3n){background:var(--red)}
+.arrow{align-self:center;font-size:1.6em;color:var(--gold)}
+/* quiz */
+.quiz{flex:1;display:flex;flex-direction:column}
+.qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4em;font-weight:700;color:#8b7b63}
+.qturn{background:var(--gold2);color:#7a4f00;padding:.2em .8em;border-radius:99px}
+.qq{font-size:1.45em;font-weight:800;background:#fff;border-radius:18px;padding:.7em 1em;box-shadow:0 4px 14px rgba(35,48,74,.08);margin-bottom:.7em;border-left:10px solid var(--red)}
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:.7em}
+.qo{font:inherit;font-size:1.15em;font-weight:700;text-align:left;border:3px solid #e3d6c2;background:#fff;border-radius:16px;padding:.6em .9em;cursor:pointer;color:var(--navy);display:flex;gap:.6em;align-items:center}
+.qo .l{display:inline-flex;width:1.7em;height:1.7em;border-radius:50%;background:var(--navy);color:#fff;align-items:center;justify-content:center;flex:none;font-size:.85em}
+.qo.ok{background:#e8f7ee;border-color:var(--ok)}.qo.ok .l{background:var(--ok)}
+.qo.bad{background:#fdeceb;border-color:var(--bad)}.qo.bad .l{background:var(--bad)}
+.qo[disabled]{cursor:default}
+.qex{margin-top:.7em;min-height:2.4em;font-size:.95em;color:#0f5656}
+.qfoot{display:flex;justify-content:flex-end;margin-top:.4em}
+.qend{text-align:center;margin:auto}
+.qend .big{font-size:3em}
+/* binary */
+.lamps{display:flex;gap:1.2em;justify-content:center;margin:.6em 0}
+.lamp{width:7em;text-align:center;cursor:pointer}
+.lamp .w{font-size:1.6em;font-weight:900;color:var(--teal)}
+.lamp .bulb{width:5em;height:5em;margin:.2em auto;border-radius:50%;background:#e9e2d6;display:flex;align-items:center;justify-content:center;font-size:2.4em;font-weight:900;color:#a89a84;transition:.25s;border:4px solid #d6ccbb}
+.lamp.on .bulb{background:radial-gradient(circle at 40% 35%,#fff7cf,var(--gold));color:var(--navy);box-shadow:0 0 30px var(--gold);border-color:#d68d1c}
+.binres{text-align:center;font-size:1.5em;font-weight:800}
+.binres span{color:var(--red);font-size:1.5em}
+.chal{display:flex;gap:.6em;justify-content:center;flex-wrap:wrap;margin-top:.6em}
+/* ladder */
+.ladder{display:flex;align-items:flex-end;gap:.5em;margin:.4em 0 .6em}
+.rung{flex:1;background:var(--teal);color:#fff;border-radius:12px 12px 4px 4px;text-align:center;padding:.4em .2em;font-weight:800;display:flex;flex-direction:column;justify-content:flex-end}
+.rung small{font-weight:400;font-size:.65em;opacity:.9}
+/* sets */
+.setbox{display:flex;gap:2em;align-items:center;flex-wrap:wrap}
+.ellipse{width:22em;height:13em;border-radius:50%;border:5px solid var(--red);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.4em;padding:1.5em;position:relative;background:#fff}
+.ellipse .lbl{position:absolute;top:-1.1em;background:var(--red);color:#fff;padding:.1em .8em;border-radius:99px;font-weight:700;font-size:.85em}
+.ellipse .el{display:flex;flex-direction:column;align-items:center;font-size:.8em;font-weight:700}
+.ellipse .el .em{font-size:2.2em}
+.shapes{position:relative;height:15em;background:#fff;border-radius:18px;box-shadow:0 4px 14px rgba(35,48,74,.08);margin:.4em 0}
+.shp{position:absolute;width:3em;height:3em;transition:left .7s,top .7s}
+.grlbl{position:absolute;font-weight:800;font-size:.9em;transition:opacity .4s}
+/* plan builder */
+.planwrap{display:flex;gap:1em;flex:1;min-height:0}
+.palette{width:13em;display:flex;flex-direction:column;gap:.45em}
+.pal{background:#fff;border:3px solid #e3d6c2;border-radius:12px;padding:.35em .6em;cursor:grab;touch-action:none;display:flex;align-items:center;gap:.5em;font-weight:700;font-size:.9em}
+.room{flex:1;position:relative;background:#fff;border:8px solid var(--navy);border-radius:4px;min-height:14em;background-image:linear-gradient(#f3ede3 1px,transparent 1px),linear-gradient(90deg,#f3ede3 1px,transparent 1px);background-size:28px 28px}
+.room .ttl{position:absolute;top:.3em;left:.5em;background:#fff;padding:0 .4em;border-radius:6px;font-weight:800;color:var(--red)}
+.pi{position:absolute;touch-action:none;cursor:grab;display:flex;align-items:center;justify-content:center;font-size:.65em;font-weight:700;color:var(--navy)}
+.sym-desk{width:74px;height:36px;border:3px solid var(--navy);background:#fde9c8;border-radius:3px}
+.sym-board{width:190px;height:16px;background:var(--navy);color:#fff;border-radius:2px}
+.sym-tdesk{width:96px;height:44px;border:3px solid var(--red);background:#fbe0e5;border-radius:3px}
+.sym-shelf{width:52px;height:52px;border:3px solid var(--teal);background:var(--teal2)}
+.sym-win{width:16px;height:100px;border-left:4px solid #3a8bd1;border-right:4px solid #3a8bd1;background:#dcefff}
+.sym-door{width:56px;height:56px;border-left:5px solid #8a5a2b;border-bottom:5px solid #8a5a2b;border-top-right-radius:56px;background:transparent;box-shadow:inset -2px 2px 0 #c9a37a}
+.pal .sw{transform:scale(.45);transform-origin:left center;flex:none;width:44px;height:30px;display:flex;align-items:center}
+/* summary */
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(15em,1fr));gap:.7em}
+.sc-card{background:#fff;border-radius:16px;padding:.6em .9em;box-shadow:0 3px 10px rgba(35,48,74,.08);border-top:6px solid var(--teal);font-size:.88em}
+.sc-card b{color:var(--red)}
+.sc-card:nth-child(3n+2){border-color:var(--gold)}.sc-card:nth-child(3n){border-color:var(--red)}
+.notebtn{position:fixed;right:1em;top:26px;z-index:7;font-size:15px;padding:.35em .7em}
+.note{position:fixed;right:1em;top:66px;width:min(30em,90vw);background:#23304A;color:#fff;border-radius:14px;padding:.8em 1em;font-size:15px;z-index:7;display:none;line-height:1.45;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.note.on{display:block}
+.conf{position:fixed;top:-20px;width:12px;height:18px;z-index:99;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+ul.nice{list-style:none;display:grid;gap:.4em}
+ul.nice li{background:#fff;border-radius:12px;padding:.4em .8em;box-shadow:0 2px 8px rgba(35,48,74,.06)}
+ul.nice li b{color:var(--red)}
+.steps-rev li{opacity:.15;transition:.3s}.steps-rev li.on{opacity:1}
+@media (max-width:800px){.path{grid-template-columns:1fr 1fr}.qopts{grid-template-columns:1fr}.match{grid-template-columns:1fr 1fr}.planwrap{flex-direction:column}.palette{width:auto;flex-direction:row;flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="band"></div>
+<button class="btn ghost notebtn" id="noteBtn">💡 Мугалимге</button>
+<div class="note" id="note"></div>
+<div class="deck" id="deck"></div>
+<div class="nav">
+  <button class="btn ghost" id="prev">◀</button>
+  <span class="count" id="count">1/1</span>
+  <button class="btn" id="next">▶</button>
+  <div class="prog"><i id="bar"></i></div>
+  <div class="team t1" id="team1"><button data-t="0" data-d="-1">−</button><span class="nm">Тумар</span><span class="sc">0</span><button data-t="0" data-d="1">+</button></div>
+  <div class="team t2" id="team2"><button data-t="1" data-d="-1">−</button><span class="nm">Шөкүлө</span><span class="sc">0</span><button data-t="1" data-d="1">+</button></div>
+  <button class="btn ghost" id="fs" title="Толук экран">⛶</button>
+</div>
+
+<script>
+/* ===== helpers ===== */
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function h(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+var AC=null;function tone(ok){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();var o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);var t=AC.currentTime;o.type=ok?'triangle':'sawtooth';if(ok){o.frequency.setValueAtTime(660,t);o.frequency.setValueAtTime(990,t+.1)}else{o.frequency.setValueAtTime(220,t);o.frequency.setValueAtTime(160,t+.12)}g.gain.setValueAtTime(.18,t);g.gain.exponentialRampToValueAtTime(.001,t+.35);o.start(t);o.stop(t+.36)}catch(e){}}
+function confetti(){var c=['#B3122E','#E8A33D','#1F8A8A','#23304A','#FFE3AE','#E04462'];for(var i=0;i<70;i++){var d=h('div','conf');d.style.left=Math.random()*100+'vw';d.style.background=c[i%c.length];d.style.animationDuration=(1.6+Math.random()*1.6)+'s';d.style.animationDelay=Math.random()*.4+'s';document.body.appendChild(d);(function(d){setTimeout(function(){d.remove()},3600)})(d)}}
+function shake(e){e.classList.remove('shake');void e.offsetWidth;e.classList.add('shake')}
+var COLORS=['#B3122E','#1F8A8A','#E8A33D','#23304A','#7B4FA0','#2E9E5B','#D06A2B'];
+
+/* ===== teams ===== */
+var score=[0,0],turn=0;
+function setScore(t,d){score[t]=Math.max(0,score[t]+d);$('#team'+(t+1)+' .sc').textContent=score[t]}
+$$('.team button').forEach(function(b){b.onclick=function(){setScore(+b.dataset.t,+b.dataset.d)}});
+function teamName(t){return $('#team'+(t+1)+' .nm').textContent}
+function showTurn(on){$('#team1').classList.toggle('turn',on&&turn===0);$('#team2').classList.toggle('turn',on&&turn===1)}
+
+/* ===== components ===== */
+function flipCards(el,items){var g=h('div','flips');items.forEach(function(it){var f=h('div','flip');f.innerHTML='<div class="in"><div class="f">'+(it.e?'<div class="em">'+it.e+'</div>':'')+it.f+'<small>басып көр 👆</small></div><div class="b">'+(it.be?'<div class="em">'+it.be+'</div>':'')+it.b+'</div></div>';f.onclick=function(){f.classList.toggle('on');if(f.classList.contains('on'))tone(true)};g.appendChild(f)});el.appendChild(g)}
+
+function sortGame(el,groups,items,doneMsg){
+  var pool=h('div','pool'),bins=h('div','bins');bins.style.gridTemplateColumns='repeat('+groups.length+',1fr)';
+  var sel=null,left=items.length,done=h('div','done',doneMsg||'🎉 Азаматсыңар! Баары туура!');
+  groups.forEach(function(g){var b=h('div','bin','<h4>'+g.n+'</h4><div class="in"></div>');b.dataset.id=g.id;b.onclick=function(){if(sel)tryDrop(sel,b)};bins.appendChild(b)});
+  function tryDrop(c,b){if(c.dataset.g===b.dataset.id){c.classList.remove('sel');c.classList.add('ok');$('.in',b).appendChild(c);sel=null;tone(true);left--;if(left===0){done.classList.add('on');confetti()}}else{tone(false);shake(c);shake(b);c.classList.remove('sel');sel=null}}
+  shuffle(items).forEach(function(it){var c=h('div','chip',(it.e?'<span class="em">'+it.e+'</span>':'')+it.t);c.dataset.g=it.g;pool.appendChild(c);
+    c.addEventListener('pointerdown',function(ev){if(c.classList.contains('ok'))return;ev.preventDefault();var sx=ev.clientX,sy=ev.clientY,ghost=null,over=null;
+      function mv(e){if(!ghost&&Math.abs(e.clientX-sx)+Math.abs(e.clientY-sy)>10){ghost=c.cloneNode(true);ghost.classList.add('drag');document.body.appendChild(ghost);c.style.opacity=.35}
+        if(ghost){ghost.style.left=(e.clientX-30)+'px';ghost.style.top=(e.clientY-20)+'px';var t=document.elementFromPoint(e.clientX,e.clientY);var b=t&&t.closest?t.closest('.bin'):null;if(over&&over!==b)over.classList.remove('hov');over=b;if(b&&bins.contains(b))b.classList.add('hov')}}
+      function up(e){document.removeEventListener('pointermove',mv);document.removeEventListener('pointerup',up);
+        if(ghost){ghost.remove();c.style.opacity='';if(over){over.classList.remove('hov');if(bins.contains(over))tryDrop(c,over)}}
+        else{if(sel&&sel!==c)sel.classList.remove('sel');c.classList.toggle('sel');sel=c.classList.contains('sel')?c:null}}
+      document.addEventListener('pointermove',mv);document.addEventListener('pointerup',up)})});
+  el.appendChild(pool);el.appendChild(bins);el.appendChild(done)}
+
+function matchGame(el,pairs,doneMsg){var w=h('div','match'),L=h('div','mcol l'),R=h('div','mcol r'),selL=null,selR=null,n=0,done=h('div','done',doneMsg||'🎉 Баарын туура туташтырдыңар!');
+  function check(){if(!selL||!selR)return;if(selL.dataset.k===selR.dataset.k){var col=COLORS[n%COLORS.length];[selL,selR].forEach(function(x){x.classList.remove('sel');x.classList.add('ok');x.style.background=col});n++;tone(true);if(n===pairs.length){done.classList.add('on');confetti()}}else{tone(false);shake(selL);shake(selR);selL.classList.remove('sel');selR.classList.remove('sel')}selL=selR=null}
+  pairs.forEach(function(p,i){var a=h('div','mi',(p.e?'<span class="em">'+p.e+'</span>':'')+p.a);a.dataset.k=i;a.onclick=function(){if(a.classList.contains('ok'))return;if(selL)selL.classList.remove('sel');selL=a;a.classList.add('sel');check()};L.appendChild(a)});
+  shuffle(pairs.map(function(p,i){return{b:p.b,k:i}})).forEach(function(p){var b=h('div','mi',p.b);b.dataset.k=p.k;b.onclick=function(){if(b.classList.contains('ok'))return;if(selR)selR.classList.remove('sel');selR=b;b.classList.add('sel');check()};R.appendChild(b)});
+  w.appendChild(L);w.appendChild(R);el.appendChild(w);el.appendChild(done)}
+
+function orderGame(el,items,doneMsg){var slots=h('div','slots'),tiles=h('div','tiles'),k=0,done=h('div','done',doneMsg||'🎉 Туура тартип!');
+  items.forEach(function(it,i){if(i>0)slots.appendChild(h('div','arrow','➜'));var s=h('div','slot','<span class="n">'+(i+1)+'</span>');slots.appendChild(s)});
+  var S=$$('.slot',slots);
+  shuffle(items.map(function(it,i){return{it:it,i:i}})).forEach(function(o){var t=h('div','tile',(o.it.e?'<span class="em">'+o.it.e+'</span>':'')+o.it.t);t.onclick=function(){if(o.i===k){S[k].innerHTML='<span class="n">'+(k+1)+'</span>'+t.innerHTML;S[k].classList.add('ok');t.remove();k++;tone(true);if(k===items.length){done.classList.add('on');confetti()}}else{tone(false);shake(t)}};tiles.appendChild(t)});
+  el.appendChild(slots);el.appendChild(tiles);el.appendChild(done)}
+
+function quiz(el,qs,opt){opt=opt||{};var i=0,box=h('div','quiz');el.appendChild(box);var L=['А','Б','В','Г'];
+  function render(){showTurn(true);if(i>=qs.length){showTurn(false);var w=score[0]===score[1]?'Тең чыгышты! 🤝':(score[0]>score[1]?teamName(0):teamName(1))+' алдыда! 🏆';box.innerHTML='<div class="qend"><div class="big">🎉</div><h2>Суроолор бүттү!</h2><p class="lead">'+teamName(0)+': <b>'+score[0]+'</b> · '+teamName(1)+': <b>'+score[1]+'</b></p><h3>'+w+'</h3><br><button class="btn gold">↺ Кайра ойноо</button></div>';confetti();$('.btn',box).onclick=function(){i=0;render()};return}
+    var q=qs[i];box.innerHTML='<div class="qhead"><span>Суроо '+(i+1)+' / '+qs.length+'</span>'+(opt.teams===false?'':'<span class="qturn">Кезек: '+teamName(turn)+'</span>')+'</div><div class="qq">'+q.q+'</div><div class="qopts"></div><div class="qex"></div><div class="qfoot"><button class="btn teal" style="visibility:hidden">Кийинки ▶</button></div>';
+    var O=$('.qopts',box),ex=$('.qex',box),nx=$('.qfoot .btn',box);if(q.o.length===2)O.style.gridTemplateColumns='1fr 1fr';
+    var ord=opt.keep?q.o.map(function(x,j){return j}):shuffle(q.o.map(function(x,j){return j}));
+    ord.forEach(function(j,pos){var b=h('button','qo','<span class="l">'+(q.o.length===2?(j===0?'✓':'✗'):L[pos])+'</span><span>'+q.o[j]+'</span>');b.onclick=function(){$$('.qo',O).forEach(function(x){x.disabled=true});var good=(j===q.a);if(good){b.classList.add('ok');tone(true);if(opt.teams!==false)setScore(turn,1)}else{b.classList.add('bad');tone(false);$$('.qo',O)[ord.indexOf(q.a)].classList.add('ok')}ex.innerHTML=(good?'✅ <b>Туура!</b> ':'❌ <b>Туура жооп:</b> '+q.o[q.a]+'. ')+(q.x||'');nx.style.visibility='visible'};O.appendChild(b)});
+    nx.onclick=function(){i++;if(opt.teams!==false)turn=1-turn;render()}}
+  render();return {reset:function(){i=0;render()},hide:function(){showTurn(false)},show:function(){render()}}}
+
+/* ===== SLIDES ===== */
+var S=[];
+function slide(o){S.push(o)}
+
+slide({note:'Сабактын башында класс эки командага бөлүнөт. Командалардын атын өзгөртүүгө болот. Ар бир туура жооп үчүн төмөнкү тактадагы «+» баскычы менен упай кошулат (викториналарда автоматтык түрдө).',
+html:'<div class="hero"><span class="tag">Информатика · 5-класс · «НурАиша»</span><h1>Эстейбиз, ойнойбуз,<br>жаңы нерсе үйрөнөбүз!</h1><div class="sub">1-чейректи кайталоо: «Компьютер жана маалымат» + Жаңы тема: «Объект жана модель»</div><div class="path"><div class="step"><div class="em">🔁</div><b>1. Кайталоо оюндары</b><br>Компьютер, бит жана байт</div><div class="step"><div class="em">🆕</div><b>2. Жаңы тема</b><br>Объект, көптүк, классификация, модель, план</div><div class="step"><div class="em">🏆</div><b>3. Чоң викторина</b><br>Команда менен ойнойбуз</div><div class="step"><div class="em">📝</div><b>4. Экзаменге даярдык</b><br>Эң маанилүү эрежелер</div></div><div><h3>Командалардын аты:</h3><div class="names"><input id="n1" value="Тумар"><input id="n2" value="Шөкүлө"></div></div></div>',
+init:function(el){['n1','n2'].forEach(function(id,t){$('#'+id,el).oninput=function(e){$('#team'+(t+1)+' .nm').textContent=e.target.value||('Команда '+(t+1))}})}});
+
+/* --- 1. Кайталоо --- */
+slide({note:'Ар бир карточканы окуучу чыгып басат, бирок АДЕГЕНДЕ өз сөзү менен айтып берет, анан гана карточканы ачат. Экзамендин 1-бөлүгүндө ушул 3 суроо бар (ар бири 2 упай).',
+html:'<span class="tag">Кайталоо · 1</span><h2>Эң негизги 4 сөз</h2><p class="lead">Алгач өз сөзүң менен айт — анан карточканы ачып текшер!</p><div class="g"></div><div class="hint">✍️ Экзаменде бул суроолорго <b>өз сөзүң менен</b> жооп жазасың. Жаттаба — түшүн!</div>',
+init:function(el){flipCards($('.g',el),[
+{e:'💡',f:'Информатика деген эмне?',b:'Маалыматты <b>чогултуу, сактоо, иштетүү жана берүү</b> жөнүндөгү илим. Мында компьютер негизги жардамчы.'},
+{e:'🛠️',f:'Технология деген эмне?',b:'Адамдын ишин <b>жеңилдетүү</b> үчүн колдонулган билим, ыкма жана куралдар. Мисалы: телефон, компьютер, интернет.'},
+{e:'💻',f:'Компьютер деген эмне?',b:'Маалыматты <b>киргизүүчү, иштетүүчү, сактоочу жана чыгаруучу</b> электрондук түзүлүш.'},
+{e:'📨',f:'Маалымат деген эмне?',b:'Биз көрүп, угуп, окуп билген <b>кабарлар, билимдер</b>: текст, сүрөт, үн, видео, сан.'}])}});
+
+slide({note:'Окуучу сол жактагы бөлүктү, анан оң жактагы анын милдетин басат. Туура болсо экөө бир түскө боёлот. Эскертүү: RAM — ток өчсө тазаланат; SSD/HDD — узак сактайт. Бул тестте 2 суроо!',
+html:'<span class="tag">Кайталоо · 2</span><h2>Компьютердин ичинде эмне бар?</h2><p class="lead">Бөлүктү анын милдети менен туташтыр: адегенде сол жакты, анан оң жакты бас.</p><div class="g"></div>',
+init:function(el){matchGame($('.g',el),[
+{e:'🧠',a:'Процессор (CPU)',b:'Компьютердин «мээси» — бардык эсептөөлөрдү жасайт'},
+{e:'⚡',a:'RAM (оперативдүү эс)',b:'Убактылуу эс: ток өчсө, маалымат өчүп калат'},
+{e:'💾',a:'SSD / HDD',b:'Файлдарды узак убакытка сактайт'},
+{e:'🟩',a:'Эне плата',b:'Бардык бөлүктөрдү бириктирген негизги такта'},
+{e:'🎨',a:'Видеокарта',b:'Экранга сүрөттү чыгарат'},
+{e:'🔌',a:'Электр блогу',b:'Бардык бөлүктөргө ток берет'},
+{e:'🌀',a:'Желдеткич (кулер)',b:'Компьютерди муздатып турат'}],'🎉 Азаматсыңар! Эми «мээси» — процессор экенин унутпагыла!')}});
+
+slide({note:'Сүйрөп (drag) же адегенде буюмду, анан кутучаны басуу аркылуу коюуга болот. Ката болсо буюм титирейт. Сыр сөз: «Мен компьютерге айтам → киргизүү. Компьютер мага айтат → чыгаруу».',
+html:'<span class="tag">Кайталоо · 3</span><h2>Кирет же чыгат?</h2><p class="lead">Ар бир түзүлүштү туура кутучага сүйрөп сал.</p><div class="g" style="display:flex;flex-direction:column;flex:1"></div><div class="hint">🔑 Сыр: <b>Мен компьютерге айтам</b> → киргизүү. <b>Компьютер мага айтат</b> → чыгаруу.</div>',
+init:function(el){sortGame($('.g',el),[{id:'in',n:'⬅️ КИРГИЗҮҮЧҮ<br><small>маалымат компьютерге КИРЕТ</small>'},{id:'out',n:'➡️ ЧЫГАРУУЧУ<br><small>маалымат компьютерден ЧЫГАТ</small>'}],[
+{e:'⌨️',t:'Клавиатура',g:'in'},{e:'🖱️',t:'Чычкан',g:'in'},{e:'🎤',t:'Микрофон',g:'in'},{e:'📠',t:'Сканер',g:'in'},{e:'📷',t:'Веб-камера',g:'in'},
+{e:'🖥️',t:'Монитор',g:'out'},{e:'🖨️',t:'Принтер',g:'out'},{e:'🔊',t:'Динамик',g:'out'},{e:'🎧',t:'Кулакчын',g:'out'},{e:'📽️',t:'Проектор',g:'out'}])}});
+
+slide({note:'Тартипти эстеп калуу үчүн «КИ — ИШ — САК — ЧЫК» деп класс менен бирге 3 жолу кайталагыла. Тестте ушул суроо бар.',
+html:'<span class="tag">Кайталоо · 4</span><h2>Компьютер кандай тартипте иштейт?</h2><p class="lead">Карточкаларды туура тартипте бас: эмнеден башталат?</p><div class="g"></div><div class="def">Мисал: <b>2 + 3</b> деп жаздык (киргизүү) → процессор эсептеди (иштетүү) → эске жазылды (сактоо) → экранда <b>5</b> чыкты (чыгаруу).</div><div class="hint">🎵 Эстеп кал: <b>КИ – ИШ – САК – ЧЫК!</b></div>',
+init:function(el){orderGame($('.g',el),[{e:'⌨️',t:'Киргизүү'},{e:'🧠',t:'Иштетүү'},{e:'💾',t:'Сактоо'},{e:'🖥️',t:'Чыгаруу'}],'🎉 Туура! Киргизүү → Иштетүү → Сактоо → Чыгаруу')}});
+
+slide({note:'Тестте «Кайсынысы программа?» деген суроо бар. Түшүндүрүү: программаны колго кармай албайбыз, ал компьютердин ичинде иштейт.',
+html:'<span class="tag">Кайталоо · 5</span><h2>Түзүлүшпү же программабы?</h2><p class="lead">Колго кармаса болобу? Ооба — түзүлүш. Жок — программа.</p><div class="g" style="display:flex;flex-direction:column;flex:1"></div>',
+init:function(el){sortGame($('.g',el),[{id:'hw',n:'🔧 ТҮЗҮЛҮШ<br><small>колго кармалат</small>'},{id:'sw',n:'💿 ПРОГРАММА<br><small>колго кармалбайт, компьютердин ичинде иштейт</small>'}],[
+{e:'⌨️',t:'Клавиатура',g:'hw'},{e:'🖥️',t:'Монитор',g:'hw'},{e:'🖱️',t:'Чычкан',g:'hw'},{e:'🖨️',t:'Принтер',g:'hw'},{e:'🧠',t:'Процессор',g:'hw'},
+{e:'📝',t:'Word',g:'sw'},{e:'🎨',t:'Paint',g:'sw'},{e:'📊',t:'PowerPoint',g:'sw'},{e:'🌐',t:'Браузер (Chrome)',g:'sw'},{e:'🎮',t:'Компьютердик оюн',g:'sw'}])}});
+
+slide({note:'Тепкичти көрсөтүп түшүндүрүңүз: ар бир кийинки бирдик мурункусунан 1024 эсе чоң (бит→байт гана 8 эсе). Анан оюнду ойнотуңуз. Тестте 3 суроо: эң кичине бирдик, 1 байт = 8 бит, эң чоң бирдик.',
+html:'<span class="tag">Кайталоо · 6</span><h2>Бит, байт жана алардын «тепкичи»</h2><div class="def">Компьютер маалыматты <b>0 жана 1</b> менен гана жазат. Бир 0 же бир 1 — бул <b>бит</b> (эң кичине бирдик). <b>8 бит = 1 байт.</b></div><div class="ladder"><div class="rung" style="height:2.6em;background:#7fb9b9">бит<small>0 же 1</small></div><div class="rung" style="height:3.6em;background:#4fa3a3">байт<small>= 8 бит</small></div><div class="rung" style="height:4.6em">KB<small>= 1024 байт</small></div><div class="rung" style="height:5.6em;background:var(--gold);color:var(--navy)">MB<small>= 1024 KB</small></div><div class="rung" style="height:6.6em;background:var(--red)">GB<small>= 1024 MB</small></div><div class="rung" style="height:7.6em;background:var(--navy)">TB<small>= 1024 GB · эң чоңу</small></div></div><h3>🎮 Оюн: бирдиктерди кичинеден чоңго тиз!</h3><div class="g"></div>',
+init:function(el){orderGame($('.g',el),[{t:'Бит'},{t:'Байт'},{t:'KB'},{t:'MB'},{t:'GB'},{t:'TB'}],'🎉 Бит — эң кичине, TB — эң чоң!')}});
+
+slide({note:'Чырактарды басып күйгүзүңүз. Эреже: күйгөн чырактын үстүндөгү сандарды кошобуз. Тестте «101 = ?» суроосу бар: 4+0+1 = 5. Окуучуларга «Сынак» баскычтарын басып, жоопту өздөрү табууну тапшырыңыз.',
+html:'<span class="tag">Кайталоо · 7</span><h2>Сыйкырдуу чырактар: экилик сандар</h2><p class="lead">1 = чырак <b>күйөт</b>, 0 = чырак <b>өчүк</b>. Күйгөн чырактардын үстүндөгү сандарды кош!</p><div class="lamps"></div><div class="binres">Экилик: <b class="bc">000</b> → Ондук: <span class="dc">0</span></div><div class="chal"><b style="align-self:center">Сынак:</b></div><div class="hint">🔑 <b>101</b> → 4 + 0 + 1 = <b>5</b>. &nbsp; <b>110</b> → 4 + 2 + 0 = <b>6</b>. &nbsp; <b>111</b> → 4 + 2 + 1 = <b>7</b>.</div>',
+init:function(el){var W=[4,2,1],st=[0,0,0],L=$('.lamps',el);W.forEach(function(w,i){var d=h('div','lamp','<div class="w">'+w+'</div><div class="bulb">0</div>');d.onclick=function(){st[i]=1-st[i];upd();tone(true)};L.appendChild(d)});
+function upd(){$$('.lamp',L).forEach(function(d,i){d.classList.toggle('on',!!st[i]);$('.bulb',d).textContent=st[i]});$('.bc',el).textContent=st.join('');$('.dc',el).textContent=st[0]*4+st[1]*2+st[2]}
+var C=$('.chal',el);['101','110','011','111','100'].forEach(function(s){var b=h('button','btn gold',s+' = ?');b.onclick=function(){st=s.split('').map(Number);upd();b.textContent=s+' = '+(st[0]*4+st[1]*2+st[2]);confetti()};C.appendChild(b)});upd()}});
+
+slide({note:'Тез оюн: туура же туура эмес. Командалар кезек менен жооп берет, упай автоматтык түрдө кошулат.',
+html:'<span class="tag">Кайталоо · 8</span><h2>Компьютердин жанындагы коопсуздук</h2><div class="g" style="flex:1;display:flex;flex-direction:column"></div>',
+init:function(el){this.q=quiz($('.g',el),[
+{q:'💧 Компьютердин жанында суу же чай ичсе болот.',o:['Туура','Туура эмес'],a:1,x:'Суу төгүлсө компьютер бузулат жана ток уруп кетиши мүмкүн.'},
+{q:'🔌 Нымдуу кол менен розеткага тийбеш керек.',o:['Туура','Туура эмес'],a:0,x:'Нымдуу кол — электр тогу үчүн коркунучтуу!'},
+{q:'⏻ Компьютерди «Пуск → Завершение работы» аркылуу туура өчүрүү керек.',o:['Туура','Туура эмес'],a:0,x:'Туура өчүрбөсөк, файлдар жоголушу мүмкүн.'},
+{q:'👀 Экранга өтө жакын (10 см) отуруп кароо пайдалуу.',o:['Туура','Туура эмес'],a:1,x:'Экрандан 50–70 см аралыкта отуруу керек.'},
+{q:'⏰ Ар бир 20–30 мүнөттө көзгө эс берүү керек.',o:['Туура','Туура эмес'],a:0,x:'Терезеден алыска карап, көзгө көнүгүү жасагыла.'},
+{q:'🍪 Клавиатуранын үстүндө тамак жесе болот.',o:['Туура','Туура эмес'],a:1,x:'Нан күкүмдөрү баскычтардын арасына кирип, клавиатураны бузат.'}],{keep:true})},
+leave:function(){this.q&&this.q.hide()},enter:function(){this.q&&this.q.show()}});
+
+slide({note:'Бул суроолор экзамендин суроолоруна окшош. Ар бир суроодон кийин туура жоопту класс менен бирге үн чыгарып кайталагыла.',
+html:'<span class="tag">Кайталоо · 9</span><h2>🏁 Экзамендин машыгуусу</h2><div class="g" style="flex:1;display:flex;flex-direction:column"></div>',
+init:function(el){this.q=quiz($('.g',el),[
+{q:'Компьютердин «мээси» деп кайсы бөлүгүн айтабыз?',o:['Процессор (CPU)','Монитор','Клавиатура','Принтер'],a:0,x:'Процессор бардык эсептөөлөрдү жасайт.'},
+{q:'Ток өчкөндө кайсы эстутумдагы маалымат өчүп калат?',o:['RAM','SSD','HDD','Флешка'],a:0,x:'RAM — убактылуу эс.'},
+{q:'Сүрөттөр, документтер узак убакытка кайда сакталат?',o:['SSD / HDD','RAM','Видеокарта','Электр блогу'],a:0},
+{q:'Бардык бөлүктөр туташкан негизги такта:',o:['Эне плата','Видеокарта','Процессор','Желдеткич'],a:0},
+{q:'Микрофон кандай түзүлүш?',o:['Киргизүүчү','Чыгаруучу','Программа','Эстутум'],a:0,x:'Үнүбүз компьютерге КИРЕТ.'},
+{q:'Принтер кандай түзүлүш?',o:['Чыгаруучу','Киргизүүчү','Программа','Эстутум'],a:0,x:'Маалымат кагазга ЧЫГАТ.'},
+{q:'Кайсынысы программа?',o:['Paint','Чычкан','Монитор','Клавиатура'],a:0},
+{q:'Компьютер маалыматты кайсы цифралар менен жазат?',o:['0 жана 1','0дөн 9га чейин','1 жана 2','A жана B'],a:0},
+{q:'Маалыматтын эң кичине бирдиги:',o:['Бит','Байт','Килобайт','Мегабайт'],a:0},
+{q:'1 байт канча биттен турат?',o:['8','2','10','1024'],a:0},
+{q:'Эң чоң бирдик кайсы?',o:['TB','GB','MB','KB'],a:0},
+{q:'Экилик 101 саны ондук системада канча?',o:['5','3','6','101'],a:0,x:'4 + 0 + 1 = 5'},
+{q:'Компьютер иштеринин туура тартиби:',o:['киргизүү → иштетүү → сактоо → чыгаруу','чыгаруу → сактоо → киргизүү → иштетүү','иштетүү → чыгаруу → киргизүү → сактоо','сактоо → киргизүү → чыгаруу → иштетүү'],a:0,x:'КИ – ИШ – САК – ЧЫК!'}])},
+leave:function(){this.q&&this.q.hide()},enter:function(){this.q&&this.q.show()}});
+
+/* --- 2. Жаңы тема --- */
+slide({note:'Жаңы темага өтүү. Суроо бериңиз: «Бүгүн биз кандай нерселерди көрдүк? Алардын баары кандай аталат?»',
+html:'<div class="hero"><span class="tag new">Жаңы тема</span><h1>Объект жана модель.<br>Көптүк жана классификация.<br>Моделдердин түрлөрү. План.</h1><div class="sub">Бүгүн 6 жаңы сөз үйрөнөбүз:</div><div class="row" style="font-size:1.15em;font-weight:800"><span class="chip">🍎 Объект</span><span class="chip">🧺 Көптүк</span><span class="chip">🍐 Элемент</span><span class="chip">🗂️ Классификация</span><span class="chip">🌍 Модель</span><span class="chip">🗺️ План</span></div></div>'});
+
+slide({note:'Аныктаманы окуп бергенден кийин класстагы объекттерди атоону сураңыз. Анан оюнду ойнотуңуз. Суроо: «Телефон объектпи?» — Ооба, жансыз объект.',
+html:'<span class="tag new">Жаңы тема · 1</span><h2>Объект деген эмне?</h2><div class="def"><b>Объект</b> — бизди курчап турган, биз көрө, изилдей же колдоно ала турган ар бир нерсе.</div><p class="lead">Объекттер <b>жандуу</b> жана <b>жансыз</b> болот. Ар бирин туура кутучага сал:</p><div class="g" style="display:flex;flex-direction:column;flex:1"></div>',
+init:function(el){sortGame($('.g',el),[{id:'a',n:'🌱 ЖАНДУУ объекттер<br><small>дем алат, өсөт</small>'},{id:'b',n:'🪨 ЖАНСЫЗ объекттер'}],[
+{e:'👩',t:'Адам',g:'a'},{e:'🐈',t:'Мышык',g:'a'},{e:'🌳',t:'Дарак',g:'a'},{e:'🌷',t:'Гүл',g:'a'},{e:'🐎',t:'Ат',g:'a'},
+{e:'🪨',t:'Таш',g:'b'},{e:'🪑',t:'Отургуч',g:'b'},{e:'💻',t:'Компьютер',g:'b'},{e:'🚗',t:'Машина',g:'b'},{e:'📱',t:'Телефон',g:'b'}])}});
+
+slide({note:'Табышмак оюну: окуучулар объекттин белгилерин угуп, анын атын табышат. Анан карточканы ачып текшерет. Кошумча: бир окуучу өзү объект ойлоп, анын 3 белгисин айтат, класс табат.',
+html:'<span class="tag new">Жаңы тема · 2</span><h2>Объекттин белгилери: «Мен киммин?»</h2><p class="lead">Ар бир объекттин <b>белгилери</b> бар: түсү, формасы, өлчөмү, материалы, салмагы, жайгашкан орду, кызматы. Белгилер боюнча объектти тап!</p><div class="g"></div><div class="hint">🔑 Белгилер объектти <b>таанууга, сүрөттөөгө жана башкалардан айырмалоого</b> жардам берет.</div>',
+init:function(el){flipCards($('.g',el),[
+{e:'❓',f:'Тегерекмин, кызыл же жашылмын, таттуумун, бакта өсөм.',be:'🍎',b:'<b>Алма</b>'},
+{e:'❓',f:'Тик бурчтуумун, кагаздан жасалгам, ичимде окуялар бар.',be:'📘',b:'<b>Китеп</b>'},
+{e:'❓',f:'Төрт дөңгөлөгүм бар, кыймылдайм, адамдарды ташыйм.',be:'🚗',b:'<b>Машина</b>'},
+{e:'❓',f:'Экраным бар, маалымат иштетем, мени клавиатура менен башкарышат.',be:'💻',b:'<b>Компьютер</b>'},
+{e:'❓',f:'Бийикмин, жалбырагым жашыл, тамырым жерде.',be:'🌳',b:'<b>Дарак</b>'},
+{e:'❓',f:'Аппакмын, суукмун, кышында асмандан жаайм.',be:'❄️',b:'<b>Кар</b>'}])}});
+
+slide({note:'Мисал менен түшүндүрүңүз: «Биздин класстагы бардык кыздар — окуучулардын көптүгү. Ар бир кыз — ошол көптүктүн элементи.» Тегерекке көңүл буруңуз: көптүк = тегерек, элемент = ичиндеги ар бир нерсе.',
+html:'<span class="tag new">Жаңы тема · 3</span><h2>Көптүк жана анын элементтери</h2><div class="setbox"><div class="ellipse"><span class="lbl">Мөмө-жемиштердин көптүгү</span><div class="el"><span class="em">🍎</span>Алма</div><div class="el"><span class="em">🍌</span>Банан</div><div class="el"><span class="em">🍊</span>Апельсин</div><div class="el"><span class="em">🍐</span>Алмурут</div></div><div class="grow"><div class="def"><b>Көптүк</b> — бир жалпы белгиси боюнча бириккен объекттердин тобу.</div><div class="def" style="border-color:var(--teal)"><b>Элемент</b> — көптүктүн ичиндеги ар бир өзүнчө объект.</div><p class="lead">Бул көптүктө <b>4 элемент</b> бар. Жуманын күндөрүнүн көптүгүндө — <b>7 элемент</b>.</p></div></div><table style="margin-top:.4em;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden;font-size:.95em"><tr style="background:var(--red);color:#fff"><th style="padding:.3em 1em">Көптүк</th><td style="padding:.3em 1em">Мөмө-жемиштер</td><td style="padding:.3em 1em">Жаныбарлар</td><td style="padding:.3em 1em">Мектеп буюмдары</td><td style="padding:.3em 1em">Аптанын күндөрү</td><td style="padding:.3em 1em">Транспорт</td></tr><tr><th style="padding:.3em 1em;color:var(--teal)">Элемент</th><td style="padding:.3em 1em">Алма</td><td style="padding:.3em 1em">Ит</td><td style="padding:.3em 1em">Калем</td><td style="padding:.3em 1em">Дүйшөмбү</td><td style="padding:.3em 1em">Автобус</td></tr></table>'});
+
+slide({note:'«Ашыкчасын тап» оюну. Окуучудан сураңыз: калган үчөө кандай көптүктү түзөт? Ашыкча элемент эмне үчүн кирбейт?',
+html:'<span class="tag new">Жаңы тема · 4</span><h2>🎯 Ашыкча элементти тап!</h2><p class="lead">Кайсы элемент бул көптүккө кирбейт?</p><div class="g" style="flex:1;display:flex;flex-direction:column"></div>',
+init:function(el){this.q=quiz($('.g',el),[
+{q:'🍎 Алма · 🍌 Банан · ✏️ Калем · 🍐 Алмурут',o:['✏️ Калем','🍎 Алма','🍌 Банан','🍐 Алмурут'],a:0,x:'Калгандары — мөмө-жемиштердин көптүгү (3 элемент).'},
+{q:'Дүйшөмбү · Шейшемби · Январь · Жума',o:['Январь','Дүйшөмбү','Шейшемби','Жума'],a:0,x:'Январь — ай, ал жуманын күндөрүнүн көптүгүнө кирбейт.'},
+{q:'🐕 Ит · 🐈 Мышык · 🚌 Автобус · 🐄 Уй',o:['🚌 Автобус','🐕 Ит','🐈 Мышык','🐄 Уй'],a:0,x:'Калгандары — үй жаныбарларынын көптүгү.'},
+{q:'✈️ Учак · 🚢 Кеме · 🍊 Апельсин · 🚗 Машина',o:['🍊 Апельсин','✈️ Учак','🚢 Кеме','🚗 Машина'],a:0,x:'Калгандары — транспорт каражаттарынын көптүгү.'},
+{q:'📒 Дептер · 📏 Сызгыч · 🥄 Кашык · 🖍️ Карандаш',o:['🥄 Кашык','📒 Дептер','📏 Сызгыч','🖍️ Карандаш'],a:0,x:'Кашык — ашкана буюму, калгандары — мектеп буюмдары.'}])},
+leave:function(){this.q&&this.q.hide()},enter:function(){this.q&&this.q.show()}});
+
+slide({note:'Бул — №1 практикалык иш. Аткаргандан кийин сураңыз: Канча көптүк түзүлдү? (3) Ар биринде канча элемент? (4, 3, 3) Кандай белги боюнча бөлдүк? (түрү / колдонулушу боюнча).',
+html:'<span class="tag new">Жаңы тема · 5</span><h2>Классификация деген эмне?</h2><div class="def"><b>Классификация</b> — объекттерди жалпы белгилерине карап <b>топторго бөлүү</b>. Жөнөкөй айтканда: окшош нерселерди бир жерге чогултуу.</div><div class="g" style="display:flex;flex-direction:column;flex:1"></div>',
+init:function(el){sortGame($('.g',el),[{id:'f',n:'🍎 Мөмө-жемиштер'},{id:'s',n:'✏️ Мектеп буюмдары'},{id:'t',n:'🚌 Транспорт'}],[
+{e:'🍎',t:'Алма',g:'f'},{e:'🍌',t:'Банан',g:'f'},{e:'🍊',t:'Апельсин',g:'f'},{e:'🍐',t:'Алмурут',g:'f'},
+{e:'🖊️',t:'Калем',g:'s'},{e:'📒',t:'Дептер',g:'s'},{e:'✏️',t:'Карандаш',g:'s'},
+{e:'🚌',t:'Автобус',g:'t'},{e:'🚗',t:'Машина',g:'t'},{e:'🚆',t:'Поезд',g:'t'}],'🎉 Азаматсыңар! Сиз 3 көптүк түздүңүз — бул классификация!')}});
+
+slide({note:'Белги — жүрүү чөйрөсү (жер, суу, аба). Кошумча суроо: велосипед кайсы топко кирет? Аба шары кайсы топко?',
+html:'<span class="tag new">Жаңы тема · 6</span><h2>Транспортту классификациялайбыз</h2><p class="lead">Белги: <b>кайда жүрөт?</b> — жерде, сууда же абада.</p><div class="g" style="display:flex;flex-direction:column;flex:1"></div>',
+init:function(el){sortGame($('.g',el),[{id:'l',n:'🛣️ Жер транспорту'},{id:'w',n:'🌊 Суу транспорту'},{id:'a',n:'☁️ Аба транспорту'}],[
+{e:'🚗',t:'Машина',g:'l'},{e:'🚌',t:'Автобус',g:'l'},{e:'🚆',t:'Поезд',g:'l'},{e:'🚲',t:'Велосипед',g:'l'},
+{e:'🚢',t:'Кеме',g:'w'},{e:'⛵',t:'Кайык',g:'w'},{e:'🛥️',t:'Катер',g:'w'},
+{e:'✈️',t:'Учак',g:'a'},{e:'🚁',t:'Тик учак',g:'a'},{e:'🎈',t:'Аба шары',g:'a'}])}});
+
+slide({note:'Баскычтарды басып көрсөтүңүз: бир эле көптүктү ар кандай белги боюнча классификациялоого болот. Негизги ой: КӨПТҮК — топ; КЛАССИФИКАЦИЯ — топко бөлүү иши.',
+html:'<span class="tag new">Жаңы тема · 7</span><h2>Көптүк менен классификациянын айырмасы</h2><div class="row"><div class="def grow"><b>КӨПТҮК</b> — бир топко бириккен объекттер.<br>Бизде 9 оюнчук бар — бул оюнчуктардын көптүгү.</div><div class="def grow" style="border-color:var(--teal)"><b>КЛАССИФИКАЦИЯ</b> — объекттерди белгилери боюнча топторго бөлүү.<br>Аларды түсү же формасы боюнча бөлсөк — бул классификация.</div></div><div class="shapes"></div><div class="row" style="justify-content:center"><button class="btn ghost" data-m="mix">🎲 Аралаштыр (көптүк)</button><button class="btn red" data-m="col">🎨 Түсү боюнча бөл</button><button class="btn teal" data-m="shp">🔷 Формасы боюнча бөл</button></div>',
+init:function(el){var box=$('.shapes',el),cols=['#B3122E','#1F8A8A','#E8A33D'],cn=['Кызылдар','Жашылдар','Сарылар'],sh=['circle','square','tri'],sn=['Тегерек','Төрт бурчтук','Үч бурчтук'],items=[],lbls=[];
+for(var c=0;c<3;c++)for(var s=0;s<3;s++){var d=h('div','shp');d.innerHTML=s===2?'<svg viewBox="0 0 10 10" width="100%" height="100%"><polygon points="5,0.5 9.6,9.5 0.4,9.5" fill="'+cols[c]+'"/></svg>':'<div style="width:100%;height:100%;background:'+cols[c]+';border-radius:'+(s===0?'50%':'6px')+'"></div>';d.c=c;d.s=s;box.appendChild(d);items.push(d)}
+for(var k=0;k<3;k++){var l=h('div','grlbl');l.style.opacity=0;box.appendChild(l);lbls.push(l)}
+function lay(m){var W=box.clientWidth,H=box.clientHeight;if(m==='mix'){var sp=shuffle(items);sp.forEach(function(d,i){d.style.left=(5+Math.random()*85)/100*W+'px';d.style.top=(10+Math.random()*65)/100*H+'px'});lbls.forEach(function(l){l.style.opacity=0});return}
+var key=m==='col'?'c':'s',cnt=[0,0,0];items.forEach(function(d){var g=d[key];var gx=W*(g/3)+W/6;d.style.left=(gx-80+cnt[g]*56)+'px';d.style.top=(H*.45)+'px';cnt[g]++});lbls.forEach(function(l,g){l.textContent=(m==='col'?cn[g]:sn[g]);l.style.left=(W*(g/3)+W/6-60)+'px';l.style.top=(H*.15)+'px';l.style.color=m==='col'?cols[g]:'#23304A';l.style.opacity=1});tone(true)}
+$$('[data-m]',el).forEach(function(b){b.onclick=function(){lay(b.dataset.m)}});this.lay=lay},
+enter:function(){var s=this;setTimeout(function(){s.lay&&s.lay('mix')},60)}});
+
+slide({note:'Окуучуларга чыныгы глобус же оюнчук машина көрсөтүү пайдалуу. Суроо: «Оюнчук машина чыныгы машинадай адам ташыйбы?» — Жок. Модель бардык белгилерди кайталабайт.',
+html:'<span class="tag new">Жаңы тема · 8</span><h2>Модель деген эмне?</h2><div class="def"><b>Модель</b> — чыныгы объекттин негизги өзгөчөлүктөрүн сактаган <b>жөнөкөйлөтүлгөн</b> көрсөтүлүшү. &nbsp; <b>Моделдөө</b> — модель түзүп, ал аркылуу объектти изилдөө.</div><p class="lead">Модельди анын чыныгы объекти менен туташтыр:</p><div class="g"></div>',
+init:function(el){matchGame($('.g',el),[
+{e:'🌐',a:'Глобус',b:'🌍 Жер планетасы'},{e:'🚙',a:'Оюнчук машина',b:'🚗 Чыныгы машина'},{e:'🗺️',a:'Карта',b:'⛰️ Жердин бир бөлүгү (шаар, өлкө)'},{e:'🏠',a:'Үйдүн макети',b:'🏢 Чыныгы үй'},{e:'🦴',a:'Скелет',b:'🧍 Адамдын сөөктөрү'},{e:'🛩️',a:'Учактын кичинекей үлгүсү',b:'✈️ Чыныгы учак'}],'🎉 Туура! Модель чыныгы объектке окшош, бирок жөнөкөй.')}});
+
+slide({note:'Ар бир карточканы ачардан мурун окуучулар өздөрү мисал ойлоп табышсын.',
+html:'<span class="tag new">Жаңы тема · 9</span><h2>Моделдер эмне үчүн керек?</h2><p class="lead">Карточканы ачып, мисалды көр:</p><div class="g"></div>',
+init:function(el){flipCards($('.g',el),[
+{e:'🌍',f:'Объект өтө ЧОҢ болгондо',be:'🌐',b:'Жерди толук көрө албайбыз → <b>глобус</b> колдонобуз.'},
+{e:'🔬',f:'Объект өтө КИЧИНЕ болгондо',be:'🦠',b:'Бактерияны көз менен көрбөйбүз → <b>чоңойтулган модели</b>.'},
+{e:'💰',f:'Объект өтө КЫМБАТ болгондо',be:'✈️',b:'Адегенде <b>учактын макетин</b> жасап изилдешет.'},
+{e:'⚠️',f:'Объект КОРКУНУЧТУУ болгондо',be:'🌋',b:'Жанар тоонун атылышын <b>модель</b> аркылуу изилдешет.'},
+{e:'🏗️',f:'Келечекти ПЛАНДОО үчүн',be:'📐',b:'Архитектор үй курардан мурун <b>планын жана макетин</b> даярдайт.'}])}});
+
+slide({note:'Эң маанилүү оюн. Ар бир модель кайсы түргө кирерин түшүндүрүп бергиле. Сөз модели — сөз менен сүрөттөө (табышмак, эреже). Компьютердик — компьютерде түзүлгөн.',
+html:'<span class="tag new">Жаңы тема · 10</span><h2>Моделдердин түрлөрү</h2><p class="lead">Ар бир моделди өз түрүнө сал!</p><div class="g" style="display:flex;flex-direction:column;flex:1"></div>',
+init:function(el){sortGame($('.g',el),[{id:'m',n:'🧸 Буюмдук<br><small>колго кармалат</small>'},{id:'p',n:'🗺️ Сүрөт, схема, план<br><small>сызык жана белгилер</small>'},{id:'w',n:'💬 Сөз модели<br><small>сөз менен сүрөттөлөт</small>'},{id:'c',n:'💻 Компьютердик<br><small>компьютерде түзүлөт</small>'}],[
+{e:'🌐',t:'Глобус',g:'m'},{e:'🚙',t:'Оюнчук машина',g:'m'},{e:'🏠',t:'Үйдүн макети',g:'m'},
+{e:'🗺️',t:'Карта',g:'p'},{e:'📐',t:'Бөлмөнүн планы',g:'p'},{e:'⚡',t:'Электр чынжырынын схемасы',g:'p'},
+{e:'❓',t:'Табышмак',g:'w'},{e:'📜',t:'Эреже',g:'w'},{e:'🐈',t:'Жаныбардын сүрөттөмөсү',g:'w'},
+{e:'🎨',t:'Paint\'те тартылган үй',g:'c'},{e:'🎮',t:'Оюндагы шаар',g:'c'},{e:'🏙️',t:'3D имарат',g:'c'}])}});
+
+slide({note:'Эрежелерди бирден ачыңыз («Кийинки эреже» баскычы). Ар бир эрежеде окуучудан «эмне үчүн?» деп сураңыз.',
+html:'<span class="tag new">Жаңы тема · 11</span><h2>План жана план түзүүнүн эрежелери</h2><div class="def"><b>План</b> — аймактын же бөлмөнүн <b>үстүнөн карагандагы</b> жөнөкөйлөтүлгөн чиймеси. Сүрөт — объект <i>кандай көрүнөрүн</i>, план — объекттер <i>кайда турганын</i> көрсөтөт.</div><ul class="nice steps-rev"><li><b>1.</b> Эмнени чийериңди аныкта (класс, бөлмө, короо).</li><li><b>2.</b> Үстүнөн карагандай элестет 🦅</li><li><b>3.</b> Негизги объекттерди гана көрсөт (калем, дептер — керек эмес).</li><li><b>4.</b> Шарттуу белгилерди колдон.</li><li><b>5.</b> Объекттердин ордун туура көрсөт.</li><li><b>6.</b> Тыкан жаз: сызыктар түз, белгилер так.</li><li><b>7.</b> Аталыш жаз: «Менин класстын планы».</li></ul><div style="margin-top:.6em"><button class="btn gold" id="nr">Кийинки эреже ▶</button></div>',
+init:function(el){var k=0,L=$$('li',el);$('#nr',el).onclick=function(){if(k<L.length){L[k].classList.add('on');k++;tone(true)}if(k===L.length)confetti()}}});
+
+slide({note:'Окуучулар кезек менен тактага чыгып, сол жактагы белгилерди бөлмөгө сүйрөп, өз класстын планын түзүшөт. Кийин ушундай эле планды дептерге тартышат (№2 практикалык иш). Тазалоо баскычы — бардыгын өчүрөт.',
+html:'<span class="tag new">Практикалык иш · Тактада</span><h2>Биздин класстын планын түзөбүз!</h2><div class="planwrap"><div class="palette"><b>Шарттуу белгилер</b><div class="pal" data-k="board"><span class="sw"><span class="sym-board"></span></span>Такта</div><div class="pal" data-k="desk"><span class="sw"><span class="sym-desk"></span></span>Парта</div><div class="pal" data-k="tdesk"><span class="sw"><span class="sym-tdesk"></span></span>Мугалимдин столу</div><div class="pal" data-k="shelf"><span class="sw"><span class="sym-shelf"></span></span>Шкаф</div><div class="pal" data-k="win"><span class="sw"><span class="sym-win" style="height:40px"></span></span>Терезе</div><div class="pal" data-k="door"><span class="sw"><span class="sym-door" style="width:30px;height:30px"></span></span>Эшик</div><button class="btn ghost" id="clr" style="margin-top:.4em">🧽 Тазалоо</button><small>Белгини бөлмөгө сүйрө. Бөлмөнүн сыртына чыгарсаң — өчөт.</small></div><div class="room"><div class="ttl" contenteditable="true">Менин класстын планы ✎</div></div></div>',
+init:function(el){var room=$('.room',el),lab={board:'Такта',desk:'',tdesk:'Мугалим',shelf:'Шкаф',win:'',door:''};
+function makeDrag(node,isNew,kind){node.addEventListener('pointerdown',function(ev){ev.preventDefault();var it=node,r=room.getBoundingClientRect();
+ if(isNew){it=h('div','pi sym-'+kind,lab[kind]);it.style.position='fixed';document.body.appendChild(it)}
+ var ox=it.offsetWidth/2,oy=it.offsetHeight/2;
+ function mv(e){if(isNew){it.style.left=(e.clientX-ox)+'px';it.style.top=(e.clientY-oy)+'px'}else{var rr=room.getBoundingClientRect();it.style.left=(e.clientX-rr.left-ox)+'px';it.style.top=(e.clientY-rr.top-oy)+'px'}}
+ mv(ev);
+ function up(e){document.removeEventListener('pointermove',mv);document.removeEventListener('pointerup',up);var rr=room.getBoundingClientRect(),inside=e.clientX>rr.left&&e.clientX<rr.right&&e.clientY>rr.top&&e.clientY<rr.bottom;
+  if(isNew){if(inside){it.style.position='absolute';it.style.left=(e.clientX-rr.left-ox)+'px';it.style.top=(e.clientY-rr.top-oy)+'px';room.appendChild(it);makeDrag(it,false);tone(true)}else it.remove()}
+  else if(!inside){it.remove()}}
+ document.addEventListener('pointermove',mv);document.addEventListener('pointerup',up)})}
+$$('.pal',el).forEach(function(p){makeDrag(p,true,p.dataset.k)});
+$('#clr',el).onclick=function(){$$('.pi',room).forEach(function(x){x.remove()})}}});
+
+slide({note:'Чоң финал. Эки теманын суроолору аралаш. Жеңген командага кол чабабыз!',
+html:'<span class="tag new">Бекемдөө</span><h2>🏆 Чоң викторина: эки тема аралаш!</h2><div class="g" style="flex:1;display:flex;flex-direction:column"></div>',
+init:function(el){this.q=quiz($('.g',el),[
+{q:'Объект деген эмне?',o:['Биз көрө, изилдей, колдоно ала турган ар бир нерсе','Компьютердин бир бөлүгү','Бир гана программа','Бир гана сан'],a:0},
+{q:'Глобус — бул ...',o:['Жер планетасынын модели','Көптүк','Программа','Эстутум'],a:0},
+{q:'Жуманын күндөрүнүн көптүгүндө «Дүйшөмбү» — бул ...',o:['элемент','көптүк','модель','план'],a:0},
+{q:'Объекттерди белгилерине карап топторго бөлүү — бул ...',o:['классификация','моделдөө','иштетүү','чыгаруу'],a:0},
+{q:'Табышмак кайсы моделге кирет?',o:['Сөз модели','Буюмдук модель','Компьютердик модель','План'],a:0},
+{q:'Paint\'те тартылган үй — бул ...',o:['компьютердик модель','буюмдук модель','сөз модели','көптүк'],a:0},
+{q:'Класстын планын кандай карап тартабыз?',o:['Үстүнөн','Капталынан','Астынан','Артынан'],a:0},
+{q:'Планда эмнени тартуунун кереги жок?',o:['Калем жана дептер','Эшик','Такта','Парта'],a:0},
+{q:'Учак жана тик учак кайсы топко кирет?',o:['Аба транспорту','Суу транспорту','Жер транспорту','Мектеп буюмдары'],a:0},
+{q:'Ток өчкөндө RAM\'дагы маалымат ...',o:['өчүп калат','сакталып калат','принтерге чыгат','флешкага өтөт'],a:0},
+{q:'Экилик 110 саны ондукта канча?',o:['6','3','5','110'],a:0,x:'4 + 2 + 0 = 6'},
+{q:'Кайсынысы киргизүүчү түзүлүш?',o:['Клавиатура','Монитор','Принтер','Динамик'],a:0},
+{q:'1 байт = ?',o:['8 бит','2 бит','10 бит','1024 бит'],a:0},
+{q:'Компьютердин «мээси»:',o:['Процессор','Эне плата','Монитор','Видеокарта'],a:0}])},
+leave:function(){this.q&&this.q.hide()},enter:function(){this.q&&this.q.show()}});
+
+slide({note:'Бул слайдды экзамендин алдында дагы бир жолу көрсөтүңүз. Ар бир карточканы окуучулар үн чыгарып окушат.',
+html:'<span class="tag">Экзаменге даярдык</span><h2>📝 Экзамен үчүн эң маанилүүлөр</h2><div class="sum">'+
+'<div class="sc-card"><b>Информатика</b> — маалыматты чогултуу, сактоо, иштетүү, берүү жөнүндөгү илим.</div>'+
+'<div class="sc-card"><b>Технология</b> — ишти жеңилдеткен билим, ыкма жана куралдар.</div>'+
+'<div class="sc-card"><b>Компьютер</b> — маалыматты киргизүүчү, иштетүүчү, сактоочу, чыгаруучу электрондук түзүлүш.</div>'+
+'<div class="sc-card">🧠 <b>Процессор</b> — мээси. 🟩 <b>Эне плата</b> — баарын бириктирет.</div>'+
+'<div class="sc-card">⚡ <b>RAM</b> — ток өчсө өчөт. 💾 <b>SSD/HDD</b> — узак сактайт.</div>'+
+'<div class="sc-card">⬅️ <b>Киргизүү:</b> клавиатура, чычкан, микрофон, сканер.<br>➡️ <b>Чыгаруу:</b> монитор, принтер, динамик.</div>'+
+'<div class="sc-card">🔁 <b>КИ – ИШ – САК – ЧЫК:</b> киргизүү → иштетүү → сактоо → чыгаруу.</div>'+
+'<div class="sc-card">🔢 <b>0 жана 1</b>. Бит — эң кичине. <b>1 байт = 8 бит</b>. TB — эң чоң.</div>'+
+'<div class="sc-card">💡 Экилик: <b>101 = 4+0+1 = 5</b>. 110 = 6. 111 = 7.</div>'+
+'<div class="sc-card">💿 <b>Программа:</b> Word, Paint, PowerPoint — колго кармалбайт.</div>'+
+'<div class="sc-card">🚫 Компьютердин жанында <b>тамак-суу ичпейбиз</b>, туура өчүрөбүз.</div>'+
+'<div class="sc-card">🆕 <b>Объект · Көптүк · Элемент · Классификация · Модель · План</b> — жаңы сөздөр.</div></div>'});
+
+slide({note:'Үй тапшырмасын дептерге жаздырыңыз. Paint тапшырмасын компьютери жок окуучулар телефондогу каалаган сүрөт тартуучу тиркемеде аткарса болот.',
+html:'<span class="tag">Үй тапшырмасы</span><h2>🏠 Үйгө тапшырма</h2><ul class="nice" style="font-size:1.1em"><li>📐 <b>1.</b> Өз бөлмөңдүн же үйүңдүн <b>планын</b> шарттуу белгилер менен тарт. Аталыш жаз!</li><li>🗂️ <b>2.</b> Үйдөгү 10 буюмду 3 топко <b>классификацияла</b>: канча көптүк, ар биринде канча элемент?</li><li>🎨 <b>3.</b> Paint же телефондогу сүрөт тиркемеси менен <b>үйдүн компьютердик моделин</b> тарт.</li><li>📝 <b>4.</b> Экзаменге даярдан: «Экзамен үчүн эң маанилүүлөр» слайдын кайтала.</li></ul><div style="text-align:center;margin-top:1em"><button class="btn red" id="win" style="font-size:1.2em">🏆 Жеңүүчү команда ким?</button><h2 id="wtx" style="margin-top:.5em"></h2></div>',
+init:function(el){$('#win',el).onclick=function(){var t=score[0]===score[1]?'Тең! Экөө тең азамат! 🤝':(score[0]>score[1]?teamName(0):teamName(1))+' жеңди! 🎉';$('#wtx',el).textContent=t+'  ('+score[0]+' : '+score[1]+')';confetti();tone(true)}}});
+
+/* ===== engine ===== */
+var deck=$('#deck'),cur=0;
+S.forEach(function(o,i){var d=h('section','slide',o.html);deck.appendChild(d);o.el=d});
+function go(n){n=Math.max(0,Math.min(S.length-1,n));var o=S[cur];if(o.el.classList.contains('on')&&o.leave)o.leave();o.el.classList.remove('on');
+  cur=n;o=S[cur];o.el.classList.add('on');if(!o._init&&o.init){o.init(o.el);o._init=true}else if(o.enter)o.enter();if(o.enter&&o._first==null){o._first=1;if(o.lay)o.enter()}
+  $('#count').textContent=(cur+1)+'/'+S.length;$('#bar').style.width=((cur+1)/S.length*100)+'%';$('#note').innerHTML='<b>💡 Мугалимге:</b><br>'+(o.note||'—');try{history.replaceState(null,'','#s'+(cur+1))}catch(e){}}
+$('#prev').onclick=function(){go(cur-1)};$('#next').onclick=function(){go(cur+1)};
+$('#noteBtn').onclick=function(){$('#note').classList.toggle('on')};
+$('#fs').onclick=function(){try{if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen()}catch(e){}};
+document.addEventListener('keydown',function(e){if(e.target.isContentEditable||e.target.tagName==='INPUT')return;if(e.key==='ArrowRight'||e.key==='PageDown')go(cur+1);if(e.key==='ArrowLeft'||e.key==='PageUp')go(cur-1)});
+var st=parseInt((location.hash||'').replace('#s',''),10);go(st>0?st-1:0);
+</script>
+</body>
+</html>
